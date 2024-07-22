@@ -3,7 +3,8 @@ import 'cart_page.dart';  // Import the CartPage class
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState(); 
+  _HomePageState createState() => _HomePageState();
+
 }
 
 class _HomePageState extends State<HomePage> {
