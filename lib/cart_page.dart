@@ -1,68 +1,30 @@
 import 'package:flutter/material.dart';
+import 'product.dart'; // Import the Product class
 
 class CartPage extends StatelessWidget {
   final Map<String, bool> selectedItem;
-  final List<Map<String, dynamic>> menuItems;
+  final List<Product> menuItems;
 
   CartPage({required this.selectedItem, required this.menuItems});
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> cartItems = menuItems
-        .where((item) => selectedItem[item['name']] ?? false)
-        .toList();
-
-    double totalPrice = cartItems.fold(
-      0.0,
-          (sum, item) => sum + item['price'],
-    );
+    List<Product> selectedProducts = menuItems.where((item) => selectedItem[item.name]!).toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
-        centerTitle: true,
-        backgroundColor: Colors.lightBlue,
+        title: Text('Your Cart'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Total Price: \$${totalPrice.toStringAsFixed(2)}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: cartItems.length,
-              itemBuilder: (context, index) {
-                var item = cartItems[index];
-                return Card(
-                  margin: EdgeInsets.all(10),
-                  child: ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        item['image'],
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    title: Text(
-                      item['name'],
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    trailing: Text(
-                      '\$${item['price'].toStringAsFixed(2)}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: selectedProducts.length,
+        itemBuilder: (context, index) {
+          var item = selectedProducts[index];
+          return ListTile(
+            leading: Image.network(item.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
+            title: Text(item.name),
+            subtitle: Text('\$${item.price.toStringAsFixed(2)}'),
+          );
+        },
       ),
     );
   }

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';  // Import the HomePage class
+// Import the HomePage widget from home.dart
+import 'home_page.dart';
 
 void main() {
-  runApp(RestaurantApp());
+  runApp(MyApp());
 }
 
-class RestaurantApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Restaurant Order App',
+      title: 'Restaurant Menu',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: HomePage(), // Set HomePage as the main screen
       debugShowCheckedModeBanner: false,
     );
   }

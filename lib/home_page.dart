@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'cart_page.dart';  // Import the CartPage class
+import 'cart_page.dart';
+import 'product.dart'; // Import the Product class
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
-
 }
-//hello world hahahahahahahahahahahahaha
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> menuItems = [
-    {'name': 'Burger', 'price': 5.99, 'image': 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YnVyZ2VyfGVufDB8fDB8fHww'},
-    {'name': 'Drink', 'price': 1.99, 'image': 'https://images.unsplash.com/photo-1703693221721-0f89755221db?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-    {'name': 'Pizza', 'price': 7.99, 'image': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-    {'name': 'Salad', 'price': 4.99, 'image': 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'},
-  ];
+  List<Product> menuItems = Product.products; // Use the static list from Product class
   Map<String, bool> selectedItem = {};
 
   @override
   void initState() {
     super.initState();
     for (var item in menuItems) {
-      selectedItem[item['name']] = false;
+      selectedItem[item.name] = false;
     }
   }
 
@@ -70,12 +64,12 @@ class _HomePageState extends State<HomePage> {
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  selectedItem[item['name']] = !selectedItem[item['name']]!;
+                  selectedItem[item.name] = !selectedItem[item.name]!;
                 });
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedItem[item['name']]! ? Colors.blue.withOpacity(0.3) : Colors.white,
+                  color: selectedItem[item.name]! ? Colors.blue.withOpacity(0.3) : Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -93,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
                         child: Image.network(
-                          item['image'],
+                          item.imageUrl,
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),
@@ -105,28 +99,28 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            item['name'],
+                            item.name,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: selectedItem[item['name']]! ? Colors.blue : Colors.black,
+                              color: selectedItem[item.name]! ? Colors.blue : Colors.black,
                             ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '\$${item['price'].toStringAsFixed(2)}',
+                                '\$${item.price.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: selectedItem[item['name']]! ? Colors.blue : Colors.black,
+                                  color: selectedItem[item.name]! ? Colors.blue : Colors.black,
                                 ),
                               ),
                               Checkbox(
-                                value: selectedItem[item['name']],
+                                value: selectedItem[item.name],
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    selectedItem[item['name']] = value!;
+                                    selectedItem[item.name] = value!;
                                   });
                                 },
                               ),
