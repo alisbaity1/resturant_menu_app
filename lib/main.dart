@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // Import the HomePage widget from home.dart
 import 'home_page.dart';
-
+import 'login.dart';
 void main() {
   runApp(MyApp());
 }
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(), // Set HomePage as the main screen
+      home: LoginPage(), // Set HomePage as the main screen
       debugShowCheckedModeBanner: false,
     );
   }
