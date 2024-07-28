@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'product.dart';
 import 'cart_page.dart';
 import 'register.dart';
+import 'login.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
 
           ),
           IconButton(onPressed: (){ Navigator.of(context).push(
-    MaterialPageRoute(builder: (context)=> RegisterPage()));
+    MaterialPageRoute(builder: (context)=>LoginPage()));
   }, icon: Icon(Icons.login))
         ],
       ),
