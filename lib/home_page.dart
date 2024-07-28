@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'product.dart';
 import 'cart_page.dart';
-
+import 'register.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Restaurant Menu'),
         backgroundColor: Colors.lightBlue,
         centerTitle: true,
+
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -52,7 +53,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
+
           ),
+          IconButton(onPressed: (){ Navigator.of(context).push(
+    MaterialPageRoute(builder: (context)=> RegisterPage()));
+  }, icon: Icon(Icons.login))
         ],
       ),
       body: _loading
