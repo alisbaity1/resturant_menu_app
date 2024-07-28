@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'product.dart';
 import 'cart_page.dart';
-import 'product.dart'; // Import the Product class
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,15 +8,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Product> menuItems = Product.products; // Use the static list from Product class
+  bool _loading = true;
+  String _errorMessage = '';
+
+  // Define selectedItem as a Map to manage selection state
   Map<String, bool> selectedItem = {};
 
   @override
   void initState() {
     super.initState();
-    for (var item in menuItems) {
-      selectedItem[item.name] = false;
-    }
+    Product.getNamePrice((success) {
+      setState(() {
+        _loading = false;
+        if (success) {
+          for (var item in Product.products) {
+            selectedItem[item.name] = false;
+          }
+        } else {
+          _errorMessage = 'Failed to load products';
+        }
+      });
+    });
   }
 
   @override
@@ -35,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(
                   builder: (context) => CartPage(
                     selectedItem: selectedItem,
-                    menuItems: menuItems,
+                    menuItems: Product.products,
                   ),
                 ),
               );
@@ -43,7 +55,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Container(
+      body: _loading
+          ? Center(child: CircularProgressIndicator())
+          : _errorMessage.isNotEmpty
+          ? Center(child: Text(_errorMessage))
+          : Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.white, Colors.grey.shade300],
@@ -58,9 +74,9 @@ class _HomePageState extends State<HomePage> {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
-          itemCount: menuItems.length,
+          itemCount: Product.products.length,
           itemBuilder: (context, index) {
-            var item = menuItems[index];
+            var item = Product.products[index];
             return GestureDetector(
               onTap: () {
                 setState(() {
@@ -87,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
                         child: Image.network(
-                          item.imageUrl,
+                          item.image,
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),
