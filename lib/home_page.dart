@@ -3,6 +3,7 @@ import 'product.dart';
 import 'cart_page.dart';
 import 'register.dart';
 import 'login.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -39,7 +40,12 @@ class _HomePageState extends State<HomePage> {
         title: Text('Restaurant Menu'),
         backgroundColor: Colors.lightBlue,
         centerTitle: true,
-
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            // Handle menu button press
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -54,11 +60,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
-
           ),
-          IconButton(onPressed: (){ Navigator.of(context).push(
-    MaterialPageRoute(builder: (context)=>LoginPage()));
-  }, icon: Icon(Icons.login))
+          IconButton(
+            icon: Icon(Icons.login),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ),
         ],
       ),
       body: _loading
@@ -76,7 +86,8 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+            crossAxisCount:
+            MediaQuery.of(context).size.width > 600 ? 3 : 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
@@ -86,12 +97,15 @@ class _HomePageState extends State<HomePage> {
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  selectedItem[item.name] = !selectedItem[item.name]!;
+                  selectedItem[item.name] =
+                  !selectedItem[item.name]!;
                 });
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedItem[item.name]! ? Colors.blue.withOpacity(0.3) : Colors.white,
+                  color: selectedItem[item.name]!
+                      ? Colors.blue.withOpacity(0.3)
+                      : Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -107,7 +121,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(15)),
                         child: Image.network(
                           item.image,
                           fit: BoxFit.cover,
@@ -118,31 +133,38 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
                         children: [
                           Text(
                             item.name,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: selectedItem[item.name]! ? Colors.blue : Colors.black,
+                              color: selectedItem[item.name]!
+                                  ? Colors.blue
+                                  : Colors.black,
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 '\$${item.price.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: selectedItem[item.name]! ? Colors.blue : Colors.black,
+                                  color: selectedItem[item.name]!
+                                      ? Colors.blue
+                                      : Colors.black,
                                 ),
                               ),
                               Checkbox(
                                 value: selectedItem[item.name],
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    selectedItem[item.name] = value!;
+                                    selectedItem[item.name] =
+                                    value!;
                                   });
                                 },
                               ),
