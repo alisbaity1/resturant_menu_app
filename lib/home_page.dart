@@ -113,13 +113,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-              ListTile(
-                title: Text('Contact Us'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Open a dialog or page with contact options
-                },
-              ),
+
             ],
           ),
         ),
