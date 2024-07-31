@@ -3,6 +3,7 @@ import 'product.dart';
 import 'cart_page.dart';
 import 'register.dart';
 import 'login.dart';
+import 'addproduct.dart'; // Import the add product page
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _loading = true;
   String _errorMessage = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Define selectedItem as a Map to manage selection state
   Map<String, bool> selectedItem = {};
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Restaurant Menu'),
         backgroundColor: Colors.lightBlue,
@@ -43,7 +46,7 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            // Handle menu button press
+            _scaffoldKey.currentState?.openDrawer();
           },
         ),
         actions: [
@@ -70,6 +73,37 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.5, // Half the screen width
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue,
+                ),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text('Add Product'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AddProductPage()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())
@@ -163,8 +197,7 @@ class _HomePageState extends State<HomePage> {
                                 value: selectedItem[item.name],
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    selectedItem[item.name] =
-                                    value!;
+                                    selectedItem[item.name] = value!;
                                   });
                                 },
                               ),
